@@ -63,5 +63,7 @@ Advanced
 ========
 This plugin is a complete rewrite of https://github.com/blackbiron/jWindowCrop 
 A reference to the crop object can be accessed like so:
+```javascript
 	var crop = $( 'img.crop' ).data( 'crop' );
+```
 You then have access to all the properties and methods used for that specific element.
