@@ -4,10 +4,11 @@ Easy to use jQuery plugin for zoom & pan image cropping.
 
 Demo
 ====
-Visit: http://www.tmatthew.net/jwindowcrop
+Visit: http://adriengibrat.github.com/jQuery-crop/
 
 Usage
 =====
+```javascript
 	// minimum
 	$( 'img.crop' ).crop();
 
@@ -20,7 +21,7 @@ Usage
 		.on ( 'crop', function( event ) {
 				console.log( $( this ).attr( 'id' ), 'x: '+ event.cropX );
 		} );
-
+```
 Options
 =======
 <table>

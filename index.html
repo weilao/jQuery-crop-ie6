@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>jWindowCrop</title>
-	<link type="text/css" media="screen" rel="stylesheet" href="jWindowCrop.css">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="jquery.mousewheel.js"></script>
-	<script type="text/javascript" src="jquery.jWindowCrop.js"></script>
+	<title>jQuery-crop</title>
+	<link type="text/css" media="screen" rel="stylesheet" href="jquery.crop.css">
 	<style type="text/css">
 		body {
 			font-family : sans-serif;
@@ -19,30 +16,14 @@
 			border : 4px solid black;
 		}
 	</style>
-</head>
-<body>
-
-	<img class="crop" alt="" src="dock.jpg" />
-	<div class="results">
-		<b>X</b>: <span class="cropX"></span><br />
-		<b>Y</b>: <span class="cropY"></span><br />
-		<b>W</b>: <span class="cropW"></span><br />
-		<b>H</b>: <span class="cropH"></span><br />
-	</div>
-
-	<img class="crop" alt="" src="dock.jpg" />
-	<div class="results">
-		<b>X</b>: <span class="cropX"></span><br />
-		<b>Y</b>: <span class="cropY"></span><br />
-		<b>W</b>: <span class="cropW"></span><br />
-		<b>H</b>: <span class="cropH"></span><br />
-	</div>
-
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="jquery.crop.js"></script>
 	<script type="text/javascript">
 		$( function () {
 			$( '.crop' ).each( function () {
 				var image     = $( this )
-					, results = image.next( 'div' )
+					, results = image.next( '.results' )
 					, crop    = image
 						.crop( {
 							width      : 400
@@ -68,5 +49,21 @@
 			} );
 		} );
 	</script>
+</head>
+<body>
+	<img class="crop" alt="" src="dock.jpg" />
+	<div class="results">
+		<b>X</b>: <span class="cropX"></span>
+		<b>Y</b>: <span class="cropY"></span>
+		<b>W</b>: <span class="cropW"></span>
+		<b>H</b>: <span class="cropH"></span>
+	</div>
+	<img class="crop" alt="" src="beach.jpg" />
+	<div class="results">
+		<b>X</b>: <span class="cropX"></span>
+		<b>Y</b>: <span class="cropY"></span>
+		<b>W</b>: <span class="cropW"></span>
+		<b>H</b>: <span class="cropH"></span>
+	</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
-/* jWindowCrop v1.0.0
+/* jQuery-crop v1.0.0, based on jWindowCrop v1.0.0
  * Copyright (c) 2012 Tyler Brown
+ * Modified by Adrien Gibrat
  * Licensed under the MIT license.
  */
 ( function ( $ ) {
@@ -56,7 +57,7 @@
 				.load(); // init even if image is already loaded
 			this.$frame
 				.css( { width : this.options.width, height : this.options.height } )
-				.append( this.options.loading )
+				.append( this.options.loading );
 			if ( this.options.controls )
 				this.$frame
 					.append( $( '<div/>', { class : namespace + 'Controls' } )
