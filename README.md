@@ -1,6 +1,7 @@
 Description
 ===========
 Easy to use jQuery plugin for zoom & pan image cropping.
+This plugin is a complete rewrite of https://github.com/blackbiron/jWindowCrop 
 
 Demo
 ====
@@ -61,7 +62,6 @@ cropX, cropY, cropW, cropH, stretch (boolean) values are added to the event pass
 
 Advanced
 ========
-This plugin is a complete rewrite of https://github.com/blackbiron/jWindowCrop 
 A reference to the crop object can be accessed like so:
 ```javascript
 	var crop = $( 'img.crop' ).data( 'crop' );
