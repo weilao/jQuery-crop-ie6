@@ -58,10 +58,10 @@
 			this.$frame
 				.css( { width : this.options.width, height : this.options.height } )
 				.append( this.options.loading );
-			if ( this.options.controls )
+			if ( this.options.controls !== false )
 				this.$frame
 					.append( $( '<div/>', { class : namespace + 'Controls' } )
-						.append( $( '<span/>', { text : this.options.controls } ) )
+						.append( $( '<span/>' ).append( this.options.controls ) )
 						.append( $( '<a/>', { class : namespace + 'ZoomIn' } ).on( 'click.' + namespace, $.proxy( this.zoomIn, this ) ) )
 						.append( $( '<a/>', { class : namespace + 'ZoomOut' } ).on( 'click.' + namespace, $.proxy( this.zoomOut, this ) ) )
 					);
