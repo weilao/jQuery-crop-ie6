@@ -24,19 +24,22 @@
 			$( '.crop' ).each( function () {
 				var image     = $( this )
 					, results = image.next( '.results' )
+					, x       = $( '.cropX', results )
+					, y       = $( '.cropY', results )
+					, w       = $( '.cropW', results )
+					, h       = $( '.cropH', results )
 					, crop    = image
 						.crop( {
 							width      : 400
 							, height   : 300
 							, loading  : 'Hello World'
-							, text     : 'Drag to move, scroll to zoom'
-							//, controls : false
+							, controls : 'Drag to move, scroll to zoom'
 						} )
 						.on( 'crop', function( event ) {
-							$( '.cropX', results ).text( event.cropX );
-							$( '.cropY', results ).text( event.cropY );
-							$( '.cropW', results ).text( event.cropW );
-							$( '.cropH', results ).text( event.cropH );
+							x.text( event.cropX );
+							y.text( event.cropY );
+							w.text( event.cropW );
+							h.text( event.cropH );
 						} )
 						.data( 'crop' );
 				image
