@@ -4,7 +4,8 @@
  * Licensed under the MIT license.
  */
 ( function ( $ ) {
-	var plugin      = function crop ( image, options ) {
+	var namespace = 'crop' // IE sucks
+	    , plugin  = function ( image, options ) {
 			var self = this;
 			$.extend( this.options, options );
 			this.$image = $( image ).wrap( '<div class="' + namespace + 'Frame"/>' ) // wrap image in frame;
@@ -66,7 +67,6 @@
 						.append( $( '<a/>', { class : namespace + 'ZoomOut' } ).on( 'click.' + namespace, $.proxy( this.zoomOut, this ) ) )
 					);
 		}
-		, namespace = plugin.name
 	;
 	$[ namespace ] = $.extend( plugin
 	, {
