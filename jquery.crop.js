@@ -62,10 +62,10 @@
 				.hover(function(){self.$frame.toggleClass('hover');});
 			if ( this.options.controls !== false )
 				this.$frame
-					.append( $( '<div/>', { className : namespace + 'Controls' } )
+					.append( $( '<div/>', { 'class' : namespace + 'Controls' } )
 						.append( $( '<span/>' ).append( this.options.controls ) )
-						.append( $( '<a/>', { className : namespace + 'ZoomIn' } ).on( 'click.' + namespace, $.proxy( this.zoomIn, this ) ) )
-						.append( $( '<a/>', { className : namespace + 'ZoomOut' } ).on( 'click.' + namespace, $.proxy( this.zoomOut, this ) ) )
+						.append( $( '<a/>', { 'class' : namespace + 'ZoomIn' } ).on( 'click.' + namespace, $.proxy( this.zoomIn, this ) ) )
+						.append( $( '<a/>', { 'class' : namespace + 'ZoomOut' } ).on( 'click.' + namespace, $.proxy( this.zoomOut, this ) ) )
 					);
 		}
 	;
