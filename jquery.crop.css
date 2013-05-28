@@ -23,6 +23,7 @@
 	-moz-transition    : opacity .25s linear;
 	-webkit-transition : opacity .25s linear;
 }
+.cropFrame.hover .cropControls,
 .cropFrame:hover .cropControls {
 	opacity    : .6;
 	filter     : alpha(opacity=60);
