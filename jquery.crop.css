@@ -54,6 +54,7 @@
 }
 .cropZoomIn::after {
 	content : "+";
+	display : block;
 }
 .cropZoomOut::after {
 	vertical-align : top;
@@ -61,4 +62,5 @@
 	font-size      : 22px;
 	margin-left    : -2px;
 	content        : "-";
+	display        : block;
 }
