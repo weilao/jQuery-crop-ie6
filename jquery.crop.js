@@ -58,7 +58,8 @@
 				.load(); // init even if image is already loaded
 			this.$frame
 				.css( { width : this.options.width, height : this.options.height } )
-				.append( this.options.loading );
+				.append( this.options.loading )
+				.hover(function(){this.$frame.toggleClass('hover');});
 			if ( this.options.controls !== false )
 				this.$frame
 					.append( $( '<div/>', { className : namespace + 'Controls' } )
