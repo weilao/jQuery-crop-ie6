@@ -52,11 +52,22 @@
 	text-decoration : none;
 	cursor          : pointer;
 }
-.cropZoomIn::after {
+/* IE SUCKS */
+.cropZoomIn,
+.cropZoomOut {
+	zoom : expression( 
+		this.runtimeStyle.zoom = "1",
+		this.appendChild( document.createElement("span") ).className = "after"
+	)\9;
+}
+.cropZoomIn::after,
+.cropZoomIn .after {
 	content : "+";
 	display : block;
 }
-.cropZoomOut::after {
+
+.cropZoomOut::after,
+.cropZoomOut .after {
 	vertical-align : top;
 	line-height    : 14px;
 	font-size      : 22px;
@@ -64,3 +75,5 @@
 	content        : "-";
 	display        : block;
 }
+
+
