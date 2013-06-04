@@ -51,14 +51,8 @@
 	text-align      : center;
 	text-decoration : none;
 	cursor          : pointer;
-}
-/* IE SUCKS */
-.cropZoomIn,
-.cropZoomOut {
-	zoom : expression( 
-		this.runtimeStyle.zoom = "1",
-		this.appendChild( document.createElement("span") ).className = "after"
-	)\9;
+	/* IE SUCKS */
+	zoom            : expression(this.runtimeStyle.zoom = "1", this.appendChild( document.createElement("b") ).className = "after")\9;
 }
 .cropZoomIn::after,
 .cropZoomIn .after {
