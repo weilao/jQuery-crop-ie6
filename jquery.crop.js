@@ -7,9 +7,9 @@
 	var namespace = 'crop' // IE sucks
 	    , plugin  = function ( image, options ) {
 			var self = this;
-			$.extend( this.options, options );
-			this.$image = $( image ).wrap( '<div class="' + namespace + 'Frame"/>' ) // wrap image in frame;
-			this.$frame = this.$image.parent();
+			this.options = $.extend( {}, this.options, options );
+			this.$image  = $( image ).wrap( '<div class="' + namespace + 'Frame"/>' ) // wrap image in frame;
+			this.$frame  = this.$image.parent();
 			this.$image
 				.hide() // hide image until loaded
 				.addClass( namespace + 'Image' )
