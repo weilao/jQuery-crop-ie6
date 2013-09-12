@@ -1,4 +1,4 @@
-/* jQuery-crop v1.0.0, based on jWindowCrop v1.0.0
+/* jQuery-crop v1.0.1, based on jWindowCrop v1.0.0
  * Copyright (c) 2012 Tyler Brown
  * Modified by Adrien Gibrat
  * Licensed under the MIT license.
@@ -76,6 +76,7 @@
 			, zoom    : function ( percent ) {
 				this.percent = Math.max( this.minPercent, Math.min( 1, percent ) );
 				this.$image.width( Math.ceil( this.$image.prop('naturalWidth') * this.percent ) );
+				this.$image.height( Math.ceil( this.$image.prop('naturalHeight') * this.percent ) );
 				this.$image.css( { 
 					left  : plugin.fill( - Math.round( this.focal.x * this.percent - this.options.width / 2 ), this.$image.width(), this.options.width )
 					, top : plugin.fill( - Math.round( this.focal.y * this.percent - this.options.height / 2 ), this.$image.height(), this.options.height )
