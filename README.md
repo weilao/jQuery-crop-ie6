@@ -10,9 +10,10 @@ Visit: http://adriengibrat.github.com/jQuery-crop/
 Usage
 =====
 ```javascript
-	// minimum
-	$( 'img.crop' ).crop();
-
+	// minimal
+	$( 'img.crop' )
+		.crop()
+	;
 	// typical
 	$( 'img.crop' )
 		.crop( {
@@ -20,7 +21,17 @@ Usage
 			, height : 300
 		} )
 		.on ( 'crop', function( event ) {
-				console.log( $( this ).attr( 'id' ), 'x: '+ event.cropX );
+			console.log( $( this ).attr( 'id' ), 'x: '+ event.cropX );
+		} )
+	;
+	// using mousewheel event
+	$( 'img.crop' )
+		.crop()
+		.on( 'mousewheel', function ( event ) {
+			var crop = $(this).data('crop');
+			return event.originalEvent.wheelDelta < 0 ? 
+				crop.zoomIn() :
+				crop.zoomOut();
 		} );
 ```
 Options
@@ -46,12 +57,8 @@ Options
 		<td>Number of incremental zoom steps. With the default of 10, you have to click the zoom-in button 9 times to reach 100%.</td>
 	</tr>
 	<tr>
-		<td>loading</td><td>string/dom</td><td>"Loading..."</td><td>no</td>
-		<td>Text (can be HTML or dom) to display within frame until image is loaded.</td>
-	</tr>
-	<tr>
 		<td>controls</td><td>boolean/text</td><td>Click to drag</td><td>no</td>
-		<td>If false, no controls will appears. Otherwise controls and text appears mouse hover (using css).</td>
+		<td>If false, no controls will appears. Otherwise controls and text appears on mouse hover.</td>
 	</tr>
 </table>
 
