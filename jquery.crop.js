@@ -8,8 +8,11 @@
 	    , plugin  = function ( image, options ) {
 			var self  = this
 			    , img = new Image();
-			this.options = $.extend( {}, this.options, options );
 			this.$image  = $( image ).wrap( '<div class="' + namespace + 'Frame"/>' ) // wrap image in frame;
+			this.options = $.extend( {
+				width    : this.$image.attr('width')
+				, height : this.$image.attr('height')
+			}, this.options, options );
 			this.$frame  = this.$image.parent();
 			this.$image
 				.hide() // hide image until loaded
