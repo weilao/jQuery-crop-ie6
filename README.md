@@ -32,7 +32,8 @@ Usage
 			return event.originalEvent.wheelDelta < 0 ? 
 				crop.zoomIn() :
 				crop.zoomOut();
-		} );
+		} )
+	;
 ```
 Options
 =======
