@@ -34,11 +34,11 @@ Options
 		<th>Description</th>
 	</tr>
 	<tr>
-		<td>width</td><td>integer</td><td>320</td><td>no</td>
+		<td>width</td><td>integer</td><td>width attr<br> or 320</td><td>no</td>
 		<td>Width in pixels of the cropping window</td>
 	</tr>
 	<tr>
-		<td>height</td><td>integer</td><td>180</td><td>no</td>
+		<td>height</td><td>integer</td><td>height attr<br> or 180</td><td>no</td>
 		<td>Height in pixels of the cropping window</td>
 	</tr>
 	<tr>
