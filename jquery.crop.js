@@ -70,11 +70,12 @@
 				width      : 320
 				, height   : 180
 				, zoom     : 10
+				, strech   : 1
 				, loading  : 'Loading...'
 				, controls : 'Click to drag'
 			}
 			, zoom    : function ( percent ) {
-				this.percent = Math.max( this.minPercent, Math.min( 1, percent ) );
+				this.percent = Math.max( this.minPercent, Math.min( this.options.strech, percent ) );
 				this.$image.width( Math.ceil( this.$image.prop('naturalWidth') * this.percent ) );
 				this.$image.height( Math.ceil( this.$image.prop('naturalHeight') * this.percent ) );
 				this.$image.css( { 
@@ -106,7 +107,7 @@
 					, cropY   : - Math.floor( parseInt( this.$image.css( 'top' ), 10 ) / this.percent )
 					, cropW   : Math.round( this.options.width / this.percent )
 					, cropH   : Math.round( this.options.height / this.percent )
-					, stretch : this.minPercent > 1
+					, stretch : this.percent > 1
 				} ) );
 			}
 		}
