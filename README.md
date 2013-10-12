@@ -58,7 +58,7 @@ Options
 		<td>Number of incremental zoom steps. With the default of 10, you have to click the zoom-in button 9 times to reach 100%.</td>
 	</tr>
 	<tr>
-		<td>controls</td><td>boolean/text</td><td>Click to drag</td><td>no</td>
+		<td>controls</td><td>boolean/text</td><td>"Click to drag"</td><td>no</td>
 		<td>If false, no controls will appears. Otherwise controls and text appears on mouse hover.</td>
 	</tr>
 </table>
@@ -66,6 +66,12 @@ Options
 Event
 ========
 To get crop results, bind a function on crop event.
+```javascript
+	$( 'img.crop' )
+		.on( 'crop', function ( event ) {
+			console.log( event.cropX, event.cropY, event.cropW, event.cropH, event.stretch );
+		} );
+```
 cropX, cropY, cropW, cropH, stretch (boolean) values are added to the event passed to this function.
 
 Advanced
