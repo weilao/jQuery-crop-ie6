@@ -44,6 +44,7 @@
 					var width    = self.$image.prop('naturalWidth')
 					    , height = self.$image.prop('naturalHeight');
 					self.minPercent = Math.max( width ? self.options.width / width : 1, height ? self.options.height / height : 1 );
+					console.log(self.minPercent);
 					self.focal      = { x : Math.round( width / 2 ), y : Math.round( height / 2 ) };
 					self.zoom( self.minPercent );
 					self.$image.fadeIn( 'fast' ); //display image now that it is loaded
@@ -70,7 +71,7 @@
 				width      : 320
 				, height   : 180
 				, zoom     : 10
-				, stretch   : 1
+				, stretch  : 1
 				, loading  : 'Loading...'
 				, controls : 'Click to drag'
 			}
@@ -92,10 +93,10 @@
 				this.update();
 			}
 			, zoomIn  : function () {
-				return !! this.zoom( this.percent + ( 1 - this.minPercent ) / ( this.options.zoom - 1 || 1 ) );
+				return !! this.zoom( this.percent + 1 / ( this.options.zoom - 1 || 1 ) );
 			}
 			, zoomOut : function () {
-				return !! this.zoom( this.percent - ( 1 - this.minPercent ) / ( this.options.zoom - 1 || 1 ) );
+				return !! this.zoom( this.percent - 1 / ( this.options.zoom - 1 || 1 ) );
 			}
 			, update  : function () {
 				this.focal = {
