@@ -55,11 +55,15 @@ Options
 	</tr>
 	<tr>
 		<td>zoom</td><td>integer</td><td>10</td><td>no</td>
-		<td>Number of incremental zoom steps. With the default of 10, you have to click the zoom-in button 9 times to reach 100%.</td>
+		<td>Number of incremental zoom steps. With the default of 10, you have to click the zoom-in button 9 times to reach 100%</td>
+	</tr>
+	<tr>
+		<td>stretch</td><td>float</td><td>1</td><td>no</td>
+		<td>Maximum zoom ratio compared to image natural size (values > 1 could result to pixelated images)</td>
 	</tr>
 	<tr>
 		<td>controls</td><td>boolean/text</td><td>"Click to drag"</td><td>no</td>
-		<td>If false, no controls will appears. Otherwise controls and text appears on mouse hover.</td>
+		<td>If false, no controls will appears. Otherwise controls and text appears on mouse hover</td>
 	</tr>
 </table>
 
