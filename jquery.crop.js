@@ -1,4 +1,4 @@
-/* jQuery-crop v1.0.1, based on jWindowCrop v1.0.0
+/* jQuery-crop v1.0.2, based on jWindowCrop v1.0.0
  * Copyright (c) 2012 Tyler Brown
  * Modified by Adrien Gibrat
  * Licensed under the MIT license.
