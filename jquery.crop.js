@@ -70,12 +70,12 @@
 				width      : 320
 				, height   : 180
 				, zoom     : 10
-				, strech   : 1
+				, stretch   : 1
 				, loading  : 'Loading...'
 				, controls : 'Click to drag'
 			}
 			, zoom    : function ( percent ) {
-				this.percent = Math.max( this.minPercent, Math.min( this.options.strech, percent ) );
+				this.percent = Math.max( this.minPercent, Math.min( this.options.stretch, percent ) );
 				this.$image.width( Math.ceil( this.$image.prop('naturalWidth') * this.percent ) );
 				this.$image.height( Math.ceil( this.$image.prop('naturalHeight') * this.percent ) );
 				this.$image.css( { 
