@@ -44,7 +44,6 @@
 					var width    = self.$image.prop('naturalWidth')
 					    , height = self.$image.prop('naturalHeight');
 					self.minPercent = Math.max( width ? self.options.width / width : 1, height ? self.options.height / height : 1 );
-					console.log(self.minPercent);
 					self.focal      = { x : Math.round( width / 2 ), y : Math.round( height / 2 ) };
 					self.zoom( self.minPercent );
 					self.$image.fadeIn( 'fast' ); //display image now that it is loaded
