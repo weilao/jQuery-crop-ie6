@@ -3,6 +3,7 @@
 <head>
 	<title>jQuery-crop</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"/>
 	<link type="text/css" media="screen" rel="stylesheet" href="jquery.crop.css">
 	<style type="text/css">
 		body {
@@ -34,22 +35,25 @@
 						.crop( {
 							controls : 'Drag to move, scroll to zoom'
 						} )
+						// display crop info
 						.on( 'crop', function( event ) {
 							x.text( event.cropX );
 							y.text( event.cropY );
 							w.text( event.cropW );
 							h.text( event.cropH );
 						} )
-						.data( 'crop' );
+						.data( 'crop' )
+				;
+				// zoom on scroll
 				image
-					// zoom on scroll
 					.on( 'mousewheel', function ( event ) {
 						return event.originalEvent.wheelDelta < 0 ? 
 							crop.zoomIn() :
 							crop.zoomOut();
 					} )
-					// zoom on pinch touch
-					.hammer()
+				;
+				// zoom on pinch touch
+				Hammer && Hammer(this).
 					.on( 'pinchin', function ( event ) {
 						return crop.zoomOut();
 					} )
