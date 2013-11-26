@@ -18,6 +18,7 @@
 		}
 	</style>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/EightMedia/hammer.js/master/hammer.min.js"></script>
 	<script type="text/javascript" src="jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="jquery.crop.js"></script>
 	<script type="text/javascript" defer>
@@ -41,12 +42,21 @@
 						} )
 						.data( 'crop' );
 				image
-					//.on( 'dblclick', $.proxy( crop.zoomIn, crop ) )
+					// zoom on scroll
 					.on( 'mousewheel', function ( event ) {
 						return event.originalEvent.wheelDelta < 0 ? 
 							crop.zoomIn() :
 							crop.zoomOut();
-					} );
+					} )
+					// zoom on pinch touch
+					.hammer()
+					.on( 'pinchin', function ( event ) {
+						return crop.zoomOut();
+					} )
+					.on( 'pinchout', function ( event ) {
+						return 	crop.zoomIn();
+					} )
+				;
 			} );
 		} );
 	</script>
