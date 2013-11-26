@@ -60,6 +60,15 @@
 					.on( 'pinchout', function ( event ) {
 						return 	crop.zoomIn();
 					} )
+					.on( 'drag', function ( event ) {
+						crop.$image
+							.css( {
+								left  : '+=' + event.deltaX
+								, top : '+=' + event.deltaY
+							} )
+						;
+						crop.update();
+					} )
 				;
 			} );
 		} );
