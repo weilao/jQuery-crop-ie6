@@ -53,14 +53,14 @@
 					} )
 				;
 				// zoom on pinch touch
-				window.Hammer && Hammer(this)
-					.on( 'pinchin.crop', function ( event ) {
+				window.Hammer && Hammer( this )
+					.on( 'pinchin', function ( event ) {
 						return crop.zoomOut();
 					} )
-					.on( 'pinchout.crop', function ( event ) {
+					.on( 'pinchout', function ( event ) {
 						return 	crop.zoomIn();
 					} )
-					.on( 'drag.crop', function ( event ) {
+					.on( 'drag', function ( event ) {
 						crop.$image
 							.css( {
 								left  : '+=' + event.deltaX
