@@ -119,6 +119,17 @@
 					, stretch : this.percent > 1
 				} ) );
 			}
+			, destroy : function () {
+				this.$image
+					.removeClass( namespace + 'Image' )
+					.css( this.options.style )
+					.off( '.' + namespace )
+					.removeData( namespace )
+					.siblings()
+					.unwrap()
+					.remove()
+				;
+			}
 		}
 		// ensure that no gaps are between target's edges and container's edges
 		, fill    : function ( value, target, container ) { 
