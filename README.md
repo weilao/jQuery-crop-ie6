@@ -5,7 +5,7 @@ This plugin is a complete rewrite of http://www.tmatthew.net/jwindowcrop
 
 Demo
 ====
-Visit: http://adriengibrat.github.com/jQuery-crop/
+Visit: http://weilao.github.com/jQuery-crop-ie6/
 
 Usage
 =====
