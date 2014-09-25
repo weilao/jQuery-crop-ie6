@@ -149,7 +149,7 @@
                     x: Math.round(( this.options.width / 2 - parseInt(this.$image.css('left'), 10) ) / this.percent),
                     y: Math.round(( this.options.height / 2 - parseInt(this.$image.css('top'), 10) ) / this.percent)
                 };
-                this.$image.trigger($.Event('crop', {
+                this.$image.trigger($.Event('change.' + namespace, {
                     cropX: -Math.floor(parseInt(this.$image.css('left'), 10) / this.percent),
                     cropY: -Math.floor(parseInt(this.$image.css('top'), 10) / this.percent),
                     cropW: Math.round(this.options.width / this.percent),
