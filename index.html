@@ -41,7 +41,7 @@
                                         naturalHeight: 1200
                                     })
                                 // display crop info
-                                    .on('crop.crop', function (event) {
+                                    .on('change.crop', function (event) {
                                         x.text(event.cropX);
                                         y.text(event.cropY);
                                         w.text(event.cropW);
@@ -102,9 +102,5 @@
         background-color: rgb(255, 0, 0);
     }
 </style>
-<div class="slider"></div>
-<script type="text/javascript">
-    $('.slider').slider();
-</script>
 </body>
 </html>
