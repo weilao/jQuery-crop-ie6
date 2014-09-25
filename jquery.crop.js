@@ -1,124 +1,186 @@
-/*! Simple Rangeslider - v0.1.0 - 2014-09-25
- * https://github.com/weilao/simple-rangeslider
- * Copyright (c) 2014 Weilao; Licensed MIT */
-(function ($) {
-    var namespace = 'rangeslider';
+/* jQuery-crop v1.0.2, based on jWindowCrop v1.0.0
+ * Copyright (c) 2012 Tyler Brown
+ * Modified by Adrien Gibrat
+ * IE6 support By Weilao
+ * Licensed under the MIT license.
+ */
+(function ($, undefined) {
+    var namespace = 'crop',
+        plugin = function (image, options) {
+            var self = this,
+                img = new Image(),
+                node = function (tag, classname) {
+                    return $('<' + tag + '/>', { 'class': namespace + classname.charAt(0).toUpperCase() + classname.slice(1) });
+                };
 
-    $.fn[namespace] = function (options) {
-        return this.each(function () {
-            new RangeSlider(this, options);
-        });
-    };
+            // wrap image in frame;
+            this.$image = $(image).wrap(node('div', 'frame'));
 
-    var RangeSlider = function (el, options) {
-        var self = this;
-        var $slider, $sliderHandler, sliderWidth, handlerWidth, id, initialValue;
+            this.options = $.extend({}, this.options, {
+                width: this.$image.attr('width'),
+                height: this.$image.attr('height'),
+                style: this.$image.css([ 'display', 'left', 'top', 'width', 'height' ]),
+                $handler: this.$image
+            }, options);
 
-        $slider = $(el);
+            this.$frame = this.$image.parent();
+            // IE6: No naturalWidth nor naturalHeight, so provide natural width and
+            // height in options to ensure IE6 works fine
+            this.$image.data('naturalWidth', options.naturalWidth);
+            this.$image.data('naturalHeight', options.naturalHeight);
 
-        initialValue = $slider.attr('value');
-        id = $slider.attr('id');
+            this.$image
+                .hide() // hide image until loaded
+                .addClass(namespace + 'Image')
+                .data(namespace, this);
 
-        this.options = $.extend(true, {}, $[namespace].options, {
-            min: $slider.attr('min'),
-            max: $slider.attr('max')
-        }, options);
+            this.options.$handler
+                .on('dragstart.' + namespace, function (event) {
+                    // IE6: Once dragstart event triggered, mousemove not triggered anymore.
+                    event.preventDefault();
+                })
+                .on('mousedown.' + namespace, function (event) {
+                    event.preventDefault(); //some browsers do image dragging themselves
+                    $(document)
+                        .on('mousemove.' + namespace, {
+                            mouse: {
+                                x: event.pageX, y: event.pageY
+                            }, image: {
+                                x: parseInt(self.$image.css('left'), 10), y: parseInt(self.$image.css('top'), 10)
+                            }
+                        }, $.proxy(self.drag, self))
+                        .on('mouseup.' + namespace, function () {
+                            $(document).off('.' + namespace)
+                        });
+                })
+                .on('load.' + namespace, function () {
+                    if (img.naturalWidth === undefined) {
+                        img.src = self.$image.attr('src'); // should not need to wait image load event as src is loaded
+                        self.$image.prop('naturalWidth', self.$image.data('naturalWidth'));
+                        self.$image.prop('naturalHeight', self.$image.data('naturalHeight'));
+                    }
 
+                    var width = self.$image.prop('naturalWidth'),
+                        height = self.$image.prop('naturalHeight');
 
-        $slider
-            .attr({
-                id: id,
-                "class": namespace,
-                min: this.options.min,
-                max: this.options.max
-            })
-            .css('position', 'relative')
-            .val(initialValue);
+                    self.minPercent = Math.max(
+                        width ? self.options.width / width : 1,
+                        height ? self.options.height / height : 1
+                    );
 
-        // Create handler
-        $sliderHandler = $('<div class="' + namespace + '-handler"></div>');
-        $sliderHandler.appendTo($slider).css({
-            position: 'absolute',
-            top: -$slider.height() / 2
-        });
+                    self.focal = {
+                        x: Math.round(width / 2),
+                        y: Math.round(height / 2)
+                    };
 
-        this.$slider = $slider;
-        this.$sliderHandler = $sliderHandler;
-        this.sliderWidth = sliderWidth = $slider.width();
-        this._sliderOffsetLeft = $slider.offset().left;
-        this._handlerWidth = handlerWidth = $sliderHandler.width();
-        this._maxLeft = sliderWidth - handlerWidth / 2;
-        this._minLeft = -handlerWidth / 2;
+                    self.zoom(self.minPercent);
+                    //display image now that it is loaded
+                    self.$image.fadeIn('fast');
+                })
+                .trigger('load.' + namespace); // init even if image is already loaded
 
-        $slider.on('mousedown.' + namespace, function (e) {
-            e.preventDefault();
-            self.update(e);
-            $(document)
-                .on('mousemove.' + namespace, $.proxy(self.update, self))
-                .on('mouseup.' + namespace, function () {
-                    $(document).off('.' + namespace);
+            this.$frame
+                .css({
+                    width: this.options.width,
+                    height: this.options.height
+                })
+                .append(node('span', 'loading').append(this.options.loading))
+                .hover(function () {
+                    self.$frame.toggleClass('hover');
                 });
-        });
 
-        $sliderHandler.on('mousedown.' + namespace, function (e) {
-            e.preventDefault();
-            $(document)
-                .on('mousemove.' + namespace, $.proxy(self.update, self))
-                .on('mouseup.' + namespace, function () {
-                    $(document).off('.' + namespace);
-                });
-        });
-
-        $slider.data('slider', this);
-    };
-
-    $[namespace] = $.extend(RangeSlider, {
-        prototype: {
-            _percent: null,
-            getMin: function () {
-                return this.options.min;
-            },
-            getMax: function () {
-                return this.options.max;
-            },
-            getValue: function () {
-                return this.getPercent() * this.options.max;
-            },
-            setValue: function (value) {
-                this.setHandlerLeft(
-                        (value - this.options.min) / (this.options.max - this.options.min)
-                        * this._maxLeft
-                        - this._handlerWidth / 2
+            if (this.options.controls !== false) {
+                this.$frame.append(node('div', 'controls')
+                        .append(node('span', 'text').append(this.options.controls))
+                        .append(node('a', 'zoomIn').on('click.' + namespace, $.proxy(this.zoomIn, this)))
+                        .append(node('a', 'zoomOut').on('click.' + namespace, $.proxy(this.zoomOut, this)))
                 );
-            },
-            getPercent: function () {
-                return this._percent;
-            },
-            getHandlerLeft: function () {
-                return this._handlerLeft;
-            },
-            setHandlerLeft: function (left) {
-                left = Math.max(left, this._minLeft);
-                left = Math.min(left, this._maxLeft);
-                this.$sliderHandler.css('left', left);
-                this._handlerLeft = left;
-                this._percent = (this._handlerLeft + this._handlerWidth / 2 ) /
-                    (this._maxLeft - this._minLeft);
-            },
-            update: function (e) {
-                e.preventDefault();
-                this.setHandlerLeft(e.pageX - this._sliderOffsetLeft - this._handlerWidth / 2);
-                // Update value
-                var value = this.getPercent() * (this.options.max - this.options.min) + this.options.min;
-                this.$slider.val(value);
-                this.$slider.trigger('change.' + namespace, [value, this.getPercent()]);
             }
+        };
+
+    $[namespace] = $.extend(plugin, {
+        prototype: {
+            percent: null,
+            options: {
+                width: 320,
+                height: 180,
+                zoom: 10,
+                stretch: 1,
+                loading: 'Loading...',
+                controls: 'Click to drag'
+            },
+
+            zoom: function (percent) {
+                this.percent = Math.max(
+                    this.minPercent,
+                    Math.min(this.options.stretch, percent)
+                );
+
+                this.$image.width(Math.ceil(this.$image.prop('naturalWidth') * this.percent));
+                this.$image.height(Math.ceil(this.$image.prop('naturalHeight') * this.percent));
+
+                this.$image.css({
+                    left: plugin.fill(-Math.round(this.focal.x * this.percent - this.options.width / 2), this.$image.width(), this.options.width),
+                    top: plugin.fill(-Math.round(this.focal.y * this.percent - this.options.height / 2), this.$image.height(), this.options.height)
+                });
+
+                this.update();
+            },
+
+            drag: function (event) {
+                this.$image.css({
+                    left: plugin.fill(event.data.image.x + event.pageX - event.data.mouse.x, this.$image.width(), this.options.width),
+                    top: plugin.fill(event.data.image.y + event.pageY - event.data.mouse.y, this.$image.height(), this.options.height)
+                });
+
+                this.update();
+            },
+
+            zoomIn: function () {
+                return !!this.zoom(this.percent + 1 / ( this.options.zoom - 1 || 1 ));
+            },
+
+            zoomOut: function () {
+                return !!this.zoom(this.percent - 1 / ( this.options.zoom - 1 || 1 ));
+            },
+
+            update: function () {
+                this.focal = {
+                    x: Math.round(( this.options.width / 2 - parseInt(this.$image.css('left'), 10) ) / this.percent),
+                    y: Math.round(( this.options.height / 2 - parseInt(this.$image.css('top'), 10) ) / this.percent)
+                };
+                this.$image.trigger($.Event('change.' + namespace, {
+                    cropX: -Math.floor(parseInt(this.$image.css('left'), 10) / this.percent),
+                    cropY: -Math.floor(parseInt(this.$image.css('top'), 10) / this.percent),
+                    cropW: Math.round(this.options.width / this.percent),
+                    cropH: Math.round(this.options.height / this.percent), stretch: this.percent > 1
+                }));
+            },
+
+            destroy: function () {
+                this.$image
+                    .removeClass(namespace + 'Image')
+                    .css(this.options.style)
+                    .off('.' + namespace)
+                    .removeData(namespace)
+                    .siblings()
+                    .unwrap()
+                    .remove()
+                ;
+            }
+        }
+        // ensure that no gaps are between target's edges and container's edges
+        , fill: function (value, target, container) {
+            if (value + target < container)
+                value = container - target;
+            return value > 0 ? 0 : value;
         }
     });
 
-    // Default options.
-    $[namespace].options = {
-        min: 0,
-        max: 100
+    $.fn[ namespace ] = function (options) {
+        return this.each(function () {
+            new plugin(this, options);
+        });
     };
-}(jQuery));
+
+})(jQuery);
