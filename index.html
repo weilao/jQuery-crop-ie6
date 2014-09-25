@@ -84,6 +84,27 @@
     <b>W</b>: <span class="cropW"></span>
     <b>H</b>: <span class="cropH"></span>
 </div>
+<style type="text/css">
+    .slider {
+        position: relative;
+        width: 300px;
+        height: 10px;
+        margin: 5px 100px;
+        background-color: blue;
+    }
 
+    .slider-handler {
+        position: absolute;
+        top: -5px;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background-color: rgb(255, 0, 0);
+    }
+</style>
+<div class="slider"></div>
+<script type="text/javascript">
+    $('.slider').slider();
+</script>
 </body>
 </html>

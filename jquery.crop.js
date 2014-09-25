@@ -19,11 +19,11 @@
             this.options = $.extend({}, this.options, {
                 width: this.$image.attr('width'),
                 height: this.$image.attr('height'),
-                style: this.$image.css([ 'display', 'left', 'top', 'width', 'height' ])
+                style: this.$image.css([ 'display', 'left', 'top', 'width', 'height' ]),
+                $handler: this.$image
             }, options);
 
             this.$frame = this.$image.parent();
-
             // IE6: No naturalWidth nor naturalHeight, so provide natural width and
             // height in options to ensure IE6 works fine
             this.$image.data('naturalWidth', options.naturalWidth);
@@ -32,7 +32,9 @@
             this.$image
                 .hide() // hide image until loaded
                 .addClass(namespace + 'Image')
-                .data(namespace, this)
+                .data(namespace, this);
+
+            this.options.$handler
                 .on('dragstart.' + namespace, function (event) {
                     // IE6: Once dragstart event triggered, mousemove not triggered anymore.
                     event.preventDefault();
@@ -118,8 +120,8 @@
                 this.$image.height(Math.ceil(this.$image.prop('naturalHeight') * this.percent));
 
                 this.$image.css({
-                    left: plugin.fill(-Math.round(this.focal.x * this.percent - this.options.width / 2),this.$image.width(),this.options.width),
-                    top: plugin.fill(-Math.round(this.focal.y * this.percent - this.options.height / 2),this.$image.height(),this.options.height)
+                    left: plugin.fill(-Math.round(this.focal.x * this.percent - this.options.width / 2), this.$image.width(), this.options.width),
+                    top: plugin.fill(-Math.round(this.focal.y * this.percent - this.options.height / 2), this.$image.height(), this.options.height)
                 });
 
                 this.update();
