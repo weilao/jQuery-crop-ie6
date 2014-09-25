@@ -32,7 +32,34 @@
             this.$image
                 .hide() // hide image until loaded
                 .addClass(namespace + 'Image')
-                .data(namespace, this);
+                .data(namespace, this)
+                .on('load.' + namespace, function () {
+                    var width, height;
+
+                    if (!img.naturalWidth) {
+                        img.src = self.$image.attr('src'); // should not need to wait image load event as src is loaded
+                        width = self.$image.data('naturalWidth');
+                        height = self.$image.data('naturalHeight');
+                    } else {
+                        width = img.naturalWidth;
+                        height = img.naturalHeight;
+                    }
+
+                    self.minPercent = Math.max(
+                        width ? self.options.width / width : 1,
+                        height ? self.options.height / height : 1
+                    );
+
+                    self.focal = {
+                        x: Math.round(width / 2),
+                        y: Math.round(height / 2)
+                    };
+
+                    self.zoom(self.minPercent);
+                    //display image now that it is loaded
+                    self.$image.fadeIn('fast');
+                })
+                .trigger('load.' + namespace); // init even if image is already loaded
 
             this.options.$handler
                 .on('dragstart.' + namespace, function (event) {
@@ -52,32 +79,7 @@
                         .on('mouseup.' + namespace, function () {
                             $(document).off('.' + namespace)
                         });
-                })
-                .on('load.' + namespace, function () {
-                    if (img.naturalWidth === undefined) {
-                        img.src = self.$image.attr('src'); // should not need to wait image load event as src is loaded
-                        self.$image.prop('naturalWidth', self.$image.data('naturalWidth'));
-                        self.$image.prop('naturalHeight', self.$image.data('naturalHeight'));
-                    }
-
-                    var width = self.$image.prop('naturalWidth'),
-                        height = self.$image.prop('naturalHeight');
-
-                    self.minPercent = Math.max(
-                        width ? self.options.width / width : 1,
-                        height ? self.options.height / height : 1
-                    );
-
-                    self.focal = {
-                        x: Math.round(width / 2),
-                        y: Math.round(height / 2)
-                    };
-
-                    self.zoom(self.minPercent);
-                    //display image now that it is loaded
-                    self.$image.fadeIn('fast');
-                })
-                .trigger('load.' + namespace); // init even if image is already loaded
+                });
 
             this.$frame
                 .css({
@@ -116,8 +118,8 @@
                     Math.min(this.options.stretch, percent)
                 );
 
-                this.$image.width(Math.ceil(this.$image.prop('naturalWidth') * this.percent));
-                this.$image.height(Math.ceil(this.$image.prop('naturalHeight') * this.percent));
+                this.$image.width(Math.ceil(this.$image.data('naturalWidth') * this.percent));
+                this.$image.height(Math.ceil(this.$image.data('naturalHeight') * this.percent));
 
                 this.$image.css({
                     left: plugin.fill(-Math.round(this.focal.x * this.percent - this.options.width / 2), this.$image.width(), this.options.width),
