@@ -2,13 +2,19 @@
 	overflow : hidden;
 	position : relative;
 }
+
 .cropImage {
 	position : absolute;
 	top      : 0;
 	left     : 0;
-	cursor   : move;
+	cursor   : url(grab.cur), move;
 	max-width: none;
 }
+
+.cropImage:active {
+    cursor   : url(grabbing.cur), move;
+}
+
 .cropControls {
 	background : #000;
 	width      : 100%;
